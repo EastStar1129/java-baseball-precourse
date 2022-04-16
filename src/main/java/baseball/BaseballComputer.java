@@ -19,13 +19,26 @@ public class BaseballComputer {
 		this.computerNumberList = new BaseballNumberList(computerNumberSet);
 	}
 	
-	public String compare(String input) {
+	public BaseballState compare(String input) {
 		BaseballNumberList inputList = new BaseballNumberList(input);
+		BaseballState baseballState = new BaseballState();
 		
-		inputList.getNumberList();
-		computerNumberList.getNumberList();
-		
-		return "";
+		for(int i=0;i<computerNumberList.getNumberList().size();i++) {
+			setState(inputList.getNumberList().get(i), i, baseballState);
+		}
+		return baseballState;
+	}
+	
+	private void setState(Character inputNumber, int i, BaseballState baseballState){
+		if(this.computerNumberList.getNumberList().get(i) == inputNumber) {
+			baseballState.increaseStrike();
+			return ;
+		}
+		if(this.computerNumberList.getNumberList().contains(inputNumber)) {
+			baseballState.increaseBall();
+			return ;
+		}
+		baseballState.increaseNothing();
 	}
 	
 	private Set<Character> makeComputerNumberSet(){
