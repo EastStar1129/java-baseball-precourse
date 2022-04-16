@@ -1,6 +1,6 @@
 package baseball;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import camp.nextstep.edu.missionutils.Randoms;
@@ -14,16 +14,25 @@ public class BaseballComputer {
 	
 	public BaseballComputer(){
 		validateSetting();
-		Set<Integer> computerNumberSet = makeComputerNumberSet();
-		String computerNumber = setToString(computerNumberSet);
+		Set<Character> computerNumberSet = makeComputerNumberSet();
 		
-		this.computerNumberList = new BaseballNumberList(computerNumber);
+		this.computerNumberList = new BaseballNumberList(computerNumberSet);
 	}
 	
-	private Set<Integer> makeComputerNumberSet(){
-		Set<Integer> computerNumberSet = new HashSet<Integer>();
+	public String compare(String input) {
+		BaseballNumberList inputList = new BaseballNumberList(input);
+		
+		inputList.getNumberList();
+		computerNumberList.getNumberList();
+		
+		return "";
+	}
+	
+	private Set<Character> makeComputerNumberSet(){
+		Set<Character> computerNumberSet = new LinkedHashSet<Character>();
 		while(computerNumberSet.size() < NUMBER_LENGTH) {
-			computerNumberSet.add(pickNumberInRange());
+			char pickNumber = charToint(pickNumberInRange());
+			computerNumberSet.add(pickNumber);
 		}
 		return computerNumberSet;
 	}
@@ -32,12 +41,8 @@ public class BaseballComputer {
 		return Randoms.pickNumberInRange(MIN_NUMBER, MAX_NUMBER);
 	}
 	
-	private String setToString(Set<Integer> computerNumberSet) {
-		StringBuffer sb = new StringBuffer();
-		for(int computerNumber : computerNumberSet) {
-			sb.append(computerNumber);
-		}
-		return sb.toString();
+	private char charToint(int pickNumber) {
+		return Character.forDigit(pickNumber, 10);
 	}
 	
 	@SuppressWarnings("unused")
@@ -50,5 +55,7 @@ public class BaseballComputer {
             throw new IllegalArgumentException("BaseballComputer length, max, min setting error");
 		}
 	}
+	
+	
 }
 

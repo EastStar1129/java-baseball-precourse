@@ -1,44 +1,54 @@
 package baseball;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class BaseballNumberList {
 	
-	public BaseballNumberList(String numbers) {
-		validate(numbers);
-	}
-	
-	private void validate(String numbers) {
-		validateCount(numbers);
-		validateOverlap(numbers);
-		validateRange(numbers);
-	}
+	private List<Character> numberList;
 
-	private void validateCount(String numbers) {
-		if(numbers.length() != 3) {
-            throw new IllegalArgumentException("BaseballNumberList count error");
-		}
+	public BaseballNumberList(String numbers) {
+		Set<Character> numberSet = stringToSet(numbers);
+		validate(numberSet);
+		this.numberList = setToList(numberSet);
 	}
 	
-	private void validateOverlap(String numbers) {
-		Set<Character> numberSet = StringToSet(numbers);
-		
-		if(numberSet.size() != 3) {
-            throw new IllegalArgumentException("BaseballNumberList overlap error");
-		}
+	public BaseballNumberList(Set<Character> numberSet) {
+		validate(numberSet);
+		this.numberList = setToList(numberSet);
 	}
 	
-	private Set<Character> StringToSet(String numbers){
-		Set<Character> numberSet = new HashSet<>();
+	public List<Character> getNumberList(){
+		return this.numberList;
+	}
+	
+	private Set<Character> stringToSet(String numbers){
+		Set<Character> numberSet = new LinkedHashSet<Character>();
 		for(char number : numbers.toCharArray()) {
 			numberSet.add(number);
 		}
 		return numberSet;
 	}
 	
-	private void validateRange(String numbers) {
-		for(char number : numbers.toCharArray()) {
+	private List<Character> setToList(Set<Character> numberSet) {
+		return new ArrayList<>(numberSet);
+	}
+	
+	private void validate(Set<Character> numberSet) {
+		validateOverlap(numberSet);
+		validateRange(numberSet);
+	}
+	
+	private void validateOverlap(Set<Character> numberSet) {
+		if(numberSet.size() != 3) {
+            throw new IllegalArgumentException("BaseballNumberList size error");
+		}
+	}
+	
+	private void validateRange(Set<Character> numberSet) {
+		for(char number : numberSet) {
 			checkRange(number);
 		}
 	}
