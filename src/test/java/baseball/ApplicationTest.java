@@ -8,12 +8,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.io.ByteArrayInputStream;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 
 class ApplicationTest extends NsTest {
     @Test
+    @DisplayName("게임시뮬레이션 테스트")
     void 게임종료_후_재시작() {
         assertRandomNumberInRangeTest(
                 () -> {
@@ -25,6 +27,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    @DisplayName("입력값 오류 테스트")
     void 예외_테스트() {
         assertSimpleTest(() ->
                 assertThatThrownBy(() -> runException("1234"))
@@ -33,6 +36,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    @DisplayName("게임시작 함수 입력값 오류 테스트")
     void 게임시작_에러() {
     	assertSimpleTest(() ->
 	    	assertThatThrownBy(() -> {
@@ -43,18 +47,21 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    @DisplayName("게임이 끝난 후 재시작")
     void 게임오버_테스트1() {
         System.setIn(strToByteArrayInputStream("1"));
         assertThat(Application.gameover()).isInstanceOf(BaseballComputer.class);
     }
 
     @Test
+    @DisplayName("게임이 끝난 후 재시작하지 않음")
     void 게임오버_테스트2() {
         System.setIn(strToByteArrayInputStream("2"));
         assertThat(Application.gameover()).isEqualTo(null);
     }
     
     @Test
+    @DisplayName("게임이 끝난 후 입력값 오류")
     void 게임오버_테스트3() {
     	assertSimpleTest(() ->
 	    	assertThatThrownBy(() -> {
